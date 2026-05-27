@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ética Digital e IA en el Aula</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    --blue:#29abe2;
+    --light:#c5e8fd;
+    --dark:#132c4f;
+    --white:#fcfdfe;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    font-family:'DM Sans',sans-serif;
+    background:var(--white);
+    color:var(--dark);
+}
+
+/* SLIDES */
+
+.slides{
+    width:100vw;
+    height:100vh;
+    position:relative;
+}
+
+.slide{
+    position:absolute;
+    inset:0;
+    padding:60px 24px 110px;
+    overflow-y:auto;
+    opacity:0;
+    transform:translateX(50px);
+    transition:.45s;
+    pointer-events:none;
+}
+
+.slide.active{
+    opacity:1;
+    transform:translateX(0);
+    pointer-events:all;
+}
+
+.slide-inner{
+    width:100%;
+    max-width:950px;
+    margin:auto;
+}
+
+/* HERO */
+
+.hero{
+    background:linear-gradient(145deg,#eaf7fe,#caeaf9);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.hero-content{
+    text-align:center;
+}
+
+.hero h1{
+    font-family:'Syne',sans-serif;
+    font-size:clamp(2.3rem,5vw,4.5rem);
+    line-height:1.05;
+    margin-bottom:20px;
+    color:var(--dark);
+}
+
+.hero p{
+    max-width:700px;
+    margin:auto;
+    font-size:1.1rem;
+    color:#355d82;
+}
+
+.badge{
+    margin-top:30px;
+    display:inline-flex;
+    gap:10px;
+    align-items:center;
+    padding:12px 20px;
+    border-radius:100px;
+    background:rgba(41,171,226,.12);
+    border:1px solid rgba(41,171,226,.25);
+    color:#1d5b80;
+    font-size:.9rem;
+}
+
+/* TITULOS */
+
+.section-label{
+    font-family:'Syne',sans-serif;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--blue);
+    font-size:.72rem;
+    margin-bottom:10px;
+}
+
+.section-title{
+    font-family:'Syne',sans-serif;
+    font-size:clamp(1.8rem,4vw,3rem);
+    margin-bottom:16px;
+    line-height:1.1;
+}
+
+.section-text{
+    color:#4f6481;
+    max-width:700px;
+    line-height:1.8;
+    margin-bottom:35px;
+}
+
+/* CARDS */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:18px;
+}
+
+.card{
+    background:white;
+    border-radius:18px;
+    padding:28px;
+    border:1.5px solid var(--light);
+    box-shadow:0 4px 20px rgba(41,171,226,.08);
+    transition:.25s;
+}
+
+.card:hover{
+    transform:translateY(-4px);
+}
+
+.card .icon{
+    font-size:2rem;
+    margin-bottom:14px;
+}
+
+.card h3{
+    font-family:'Syne',sans-serif;
+    margin-bottom:10px;
+    font-size:1rem;
+}
+
+.card p{
+    color:#4a6080;
+    font-size:.92rem;
+    line-height:1.6;
+}
+
+/* PREGUNTAS */
+
+.questions{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:16px;
+}
+
+.question{
+    background:#f4f9fe;
+    border:1px solid var(--light);
+    border-radius:16px;
+    padding:24px;
+    font-weight:600;
+    line-height:1.5;
+}
+
+/* DESTACADO */
+
+.highlight{
+    background:linear-gradient(145deg,var(--dark),#1d436f);
+    color:white;
+    border-radius:24px;
+    padding:45px;
+    text-align:center;
+}
+
+.highlight h2{
+    font-family:'Syne',sans-serif;
+    font-size:2rem;
+    margin-bottom:18px;
+}
+
+.highlight p{
+    max-width:700px;
+    margin:auto;
+    color:#dcecff;
+    line-height:1.8;
+}
+
+/* NAV */
+
+.footer-nav{
+    position:fixed;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:950px;
+    padding:18px 24px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:linear-gradient(to top,var(--white) 70%,transparent);
+}
+
+.btn{
+    border:none;
+    cursor:pointer;
+    border-radius:12px;
+    padding:12px 24px;
+    font-family:'Syne',sans-serif;
+    font-weight:700;
+    transition:.25s;
+}
+
+.prev{
+    background:transparent;
+    border:1.5px solid rgba(19,44,79,.2);
+    color:var(--dark);
+}
+
+.prev:hover{
+    border-color:var(--blue);
+    color:var(--blue);
+}
+
+.next{
+    background:var(--dark);
+    color:white;
+}
+
+.next:hover{
+    background:var(--blue);
+}
+
+.counter{
+    font-family:'Syne',sans-serif;
+    color:var(--blue);
+    font-size:.8rem;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:700px){
+
+    .slide{
+        padding:50px 18px 100px;
+    }
+
+    .hero h1{
+        font-size:2.5rem;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="slides">
+
+    <!-- SLIDE 1 -->
+
+    <section class="slide hero active">
+
+        <div class="slide-inner hero-content">
+
+            <h1>Ética Digital e Inteligencia Artificial en el Aula</h1>
+
+            <p>
+                La IA ya forma parte de la vida cotidiana.
+                El desafío educativo no es solamente aprender a usarla,
+                sino comprender críticamente sus impactos.
+            </p>
+
+            <div class="badge">
+                🤖 Tecnología · Ética · Pensamiento crítico
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- SLIDE 2 -->
+
+    <section class="slide">
+
+        <div class="slide-inner">
+
+            <div class="section-label">Transformación digital</div>
+
+            <h2 class="section-title">
+                La IA cambió la forma de aprender
+            </h2>
+
+            <p class="section-text">
+                Herramientas capaces de generar textos, imágenes,
+                videos y respuestas automáticas ya están presentes
+                en escuelas, hogares y redes sociales.
+            </p>
+
+            <div class="grid">
+
+                <div class="card">
+                    <div class="icon">📱</div>
+                    <h3>Acceso inmediato</h3>
+                    <p>
+                        La IA está disponible desde celulares y computadoras.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">🧠</div>
+                    <h3>Nuevas posibilidades</h3>
+                    <p>
+                        Puede ayudar a crear contenidos, resumir información y aprender.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">⚠️</div>
+                    <h3>Nuevos desafíos</h3>
+                    <p>
+                        También genera problemas éticos y educativos.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- SLIDE 3 -->
+
+    <section class="slide">
+
+        <div class="slide-inner">
+
+            <div class="section-label">El verdadero desafío</div>
+
+            <h2 class="section-title">
+                No es solo tecnología
+            </h2>
+
+            <p class="section-text">
+                La escuela no debe limitarse a enseñar aplicaciones.
+                También necesita analizar cómo las tecnologías afectan
+                la información, el conocimiento y la ciudadanía.
+            </p>
+
+            <div class="grid">
+
+                <div class="card">
+                    <div class="icon">📰</div>
+                    <h3>Información</h3>
+                    <p>
+                        La IA influye en cómo circulan las noticias y contenidos.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">👥</div>
+                    <h3>Relaciones sociales</h3>
+                    <p>
+                        Impacta en la comunicación y la confianza social.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">🎓</div>
+                    <h3>Educación</h3>
+                    <p>
+                        Obliga a repensar la evaluación y el aprendizaje.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- SLIDE 4 -->
+
+    <section class="slide">
+
+        <div class="slide-inner">
+
+            <div class="section-label">Ética digital</div>
+
+            <h2 class="section-title">
+                Preguntas fundamentales
+            </h2>
+
+            <p class="section-text">
+                Hablar de ética digital implica reflexionar sobre
+                responsabilidades, decisiones y consecuencias.
+            </p>
+
+            <div class="questions">
+
+                <div class="question">
+                    🤖 ¿Qué usos de IA son responsables?
+                </div>
+
+                <div class="question">
+                    ✍️ ¿Cómo proteger la autoría intelectual?
+                </div>
+
+                <div class="question">
+                    📰 ¿Cómo enfrentar la desinformación?
+                </div>
+
+                <div class="question">
+                    🎭 ¿Cómo afectan los deepfakes?
+                </div>
+
+                <div class="question">
+                    🧠 ¿Qué lugar ocupa el pensamiento crítico?
+                </div>
+
+                <div class="question">
+                    📚 ¿Cómo evaluar en tiempos de IA?
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- SLIDE 5 -->
+
+    <section class="slide">
+
+        <div class="slide-inner">
+
+            <div class="highlight">
+
+                <h2>El rol de la escuela</h2>
+
+                <p>
+                    La respuesta educativa no debe ser ni la prohibición absoluta
+                    ni el entusiasmo sin límites.
+                    La escuela necesita construir espacios donde la tecnología
+                    sea utilizada desde una perspectiva ética, crítica y pedagógica.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- SLIDE 6 -->
+
+    <section class="slide">
+
+        <div class="slide-inner">
+
+            <div class="section-label">Objetivo de la clase</div>
+
+            <h2 class="section-title">
+                Debates y problemáticas actuales
+            </h2>
+
+            <div class="grid">
+
+                <div class="card">
+                    <div class="icon">©️</div>
+                    <h3>Derechos de autor</h3>
+                </div>
+
+                <div class="card">
+                    <div class="icon">🚨</div>
+                    <h3>Desinformación</h3>
+                </div>
+
+                <div class="card">
+                    <div class="icon">🎭</div>
+                    <h3>Deepfakes</h3>
+                </div>
+
+                <div class="card">
+                    <div class="icon">📄</div>
+                    <h3>Plagio con IA</h3>
+                </div>
+
+                <div class="card">
+                    <div class="icon">✅</div>
+                    <h3>Uso responsable</h3>
+                </div>
+
+                <div class="card">
+                    <div class="icon">🧩</div>
+                    <h3>Evaluación auténtica</h3>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+<!-- NAV -->
+
+<div class="footer-nav">
+
+    <button class="btn prev" onclick="changeSlide(-1)">
+        ← Anterior
+    </button>
+
+    <div class="counter">
+        <span id="counter">1 / 6</span>
+    </div>
+
+    <button class="btn next" onclick="changeSlide(1)">
+        Siguiente →
+    </button>
+
+</div>
+
+<script>
+
+const slides = document.querySelectorAll('.slide');
+const counter = document.getElementById('counter');
+
+let current = 0;
+
+function updateSlides(){
+
+    slides.forEach((slide,index)=>{
+
+        slide.classList.remove('active');
+
+        if(index === current){
+            slide.classList.add('active');
+        }
+
+    });
+
+    counter.textContent = `${current + 1} / ${slides.length}`;
+
+}
+
+function changeSlide(direction){
+
+    current += direction;
+
+    if(current < 0){
+        current = 0;
+    }
+
+    if(current >= slides.length){
+        current = slides.length - 1;
+    }
+
+    updateSlides();
+
+}
+
+</script>
+
+</body>
+</html>
